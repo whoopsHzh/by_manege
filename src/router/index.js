@@ -4,6 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
     routes: [
         {
             path: '/',
@@ -98,10 +99,10 @@ export default new Router({
                     meta: { title: '403' }
                 },
                 {
-                    path: '/donate',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/Donate.vue'),
-                    meta: { title: '支持作者' }
-                }
+                    path: '/performance',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/Performance.vue'),
+                    meta: { title: '绩效查看' }
+                },
             ]
         },
         {

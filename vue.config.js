@@ -5,7 +5,7 @@ module.exports = {
     // devServer: {
     //     proxy: {
     //         '/api':{
-    //             target:'http://jsonplaceholder.typicode.com',
+    //             target:'baidu.com',
     //             changeOrigin:true,
     //             pathRewrite:{
     //                 '/api':''
@@ -13,4 +13,15 @@ module.exports = {
     //         }
     //     }
     // }
+    configureWebpack: {
+        resolve: {
+            alias: {
+                'assets': '@/assets',
+                'components': '@/components',
+                'views': '@/views',
+                'api': '@/request',
+                'router': '@/router'
+            }
+        }
+    }
 }
