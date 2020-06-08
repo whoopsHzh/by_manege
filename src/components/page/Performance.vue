@@ -14,6 +14,8 @@
              data-table-dec="unqualifiedDTotal"
              value="15">
       <button class="el-button el-button--default el-button--small">上传资料</button>
+      <button value="小杨" />
+      <input type="text">
     </td>
 
   </div>
