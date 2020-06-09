@@ -25,10 +25,10 @@ const performance = {
     })
   },
   // 上传文件接口
-  uploadDateFile (fileDate) {
+  uploadDateFile (file, config) {
     return api.post(`${base.src}/file/uploadDateFile`, {
-      fileDate
-    })
+      file
+    }, config.headers)
   },
 }
 

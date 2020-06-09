@@ -11,7 +11,7 @@
     <button @click="upDataHandle"
             class="el-button el-button--default el-button--small">上传资料</button>
     </td>
-
+    <Upload></Upload>
   </div>
   </div>
 
@@ -19,6 +19,9 @@
 
 <script>
 import DropDown from 'common/DropDown'
+import Upload from 'common/Upload'
+import Vue from 'vue';
+
 import { mapGetters } from 'vuex'
 export default {
   data () {
@@ -31,7 +34,8 @@ export default {
     }
   },
   components: {
-    DropDown
+    DropDown,
+    Upload
   },
   computed: {
     ...mapGetters({ _deptCode: 'deptCode', _adminId: 'adminId' })
@@ -71,32 +75,20 @@ export default {
       // upload btn event mount
       let upLoadFather = document.querySelectorAll('.btn-upload')
       upLoadFather.forEach((Element, index) => {
-        // change cls
-        let btn = Element.children[0]
 
-        btn.setAttribute('class', 'el-button')
-        // add changeEvent
-        // onchange="handleFile()"
-        btn.addEventListener('change', (e) => {
-          var oFile = e.target.files[0];
-          let formData = new FormData();
-          formData.append('fileDate', oFile);
-          let config = {
-            //添加请求头
-            headers: { "Content-Type": "multipart/form-data" },
-            //添加上传进度监听事件
-            onUploadProgress: e => {
-              var completeProgress = ((e.loaded / e.total * 100) | 0) + "%";
-              this.progress = completeProgress;
+        // change cls
+        let upInput = Element.children[0]
+        let key = upInput.getAttribute('data-type-btnevent')
+        //  to mount Vue Compoments
+        let myShowBox = Vue.extend(Upload)
+        let showBoxInstance = new myShowBox({
+          data () {
+            return {
+              key
             }
-          };
-          this.$axios.post('http://192.168.1.166:9099/performance/file/uploadDateFile', formData, config).then(
-            function (response) { console.log(response); })
-            .catch(function (error) {
-              console.log(error);
-            });
-          // this.uploadDateFile(formData)
-        })
+          },
+        }).$mount(upInput);
+
       })
 
       // input onchange event mount
