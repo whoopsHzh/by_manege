@@ -13,12 +13,23 @@ const performance = {
     })
   },
   // 获取当前部门计算模板接口
-  getKpiTemplateHtml (adminId) {
+  getKpiTemplateHtml (adminId, staffId) {
     return api.post(`${base.src}/weichatApi/kpi/getKpiTemplateHtml`, {
-      adminId, Loading: 'true'
+      adminId, staffId, Loading: 'true'
     })
-  }
+  },
+  // 部门编号查询员工账号
+  queryAdminByDept (deptCode) {
+    return api.post(`${base.src}/weichatApi/admin/queryAdminByDept`, {
+      deptCode
+    })
+  },
+  // 上传文件接口
+  uploadDateFile (fileDate) {
+    return api.post(`${base.src}/file/uploadDateFile`, {
+      fileDate
+    })
+  },
 }
-
 
 export default performance;

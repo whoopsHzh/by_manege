@@ -10,7 +10,7 @@
                  class="user-avator"
                  alt />
             <div class="user-info-cont">
-              <div class="user-info-name">{{name}}</div>
+              <div class="user-info-name">{{_adminName}}</div>
               <div>{{role}}</div>
             </div>
           </div>
@@ -18,10 +18,10 @@
             上次登录时间：
             <span>2019-11-01</span>
           </div>
-          <div class="user-info-list">
+          <!-- <div class="user-info-list">
             上次登录地点：
             <span>东莞</span>
-          </div>
+          </div> -->
         </el-card>
         <!-- <el-card shadow="hover" style="height:252px;">
                     <div slot="header" class="clearfix">
@@ -50,6 +50,8 @@
 <script>
 import Schart from 'vue-schart';
 import bus from '../common/bus';
+import { mapMutations, mapGetters } from 'vuex'
+
 export default {
   name: 'dashboard',
   data () {
@@ -61,6 +63,7 @@ export default {
     Schart
   },
   computed: {
+    ...mapGetters({ _adminName: 'adminName' }),
     role () {
       return this.name === 'admin' ? '超级管理员' : '普通用户';
     }

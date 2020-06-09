@@ -1,7 +1,7 @@
 <template>
   <div class="login-wrap">
     <div class="ms-login">
-      <div class="ms-title">后台管理系统</div>
+      <div class="ms-title">管理系统</div>
       <el-form :model="param"
                :rules="rules"
                ref="login"
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   data: function () {
     return {
@@ -47,13 +48,13 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({ _loginSuccess: 'LOGIN_SUCCESS' })
+    ,
     submitForm () {
       this.$refs.login.validate(valid => {
         if (valid) {
           this.login()
-          //   this.$message.success('登录成功');
-          //   localStorage.setItem('ms_username', this.param.username);
-          //   this.$router.push('/');
+
         } else {
           this.$message.error('请输入账号和密码');
           console.log('error submit!!');
@@ -72,6 +73,8 @@ export default {
           this.$message.success('登录成功');
           console.log('res.data.adminId', res.data.adminId);
           localStorage.setItem('userId', res.data.adminId);
+          this.$message.success('登录成功');
+          this._loginSuccess(res.data)
           this.$router.push('/dashboard');
         } else {
           this.$message.success('登录失败!');

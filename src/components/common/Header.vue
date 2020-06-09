@@ -46,7 +46,7 @@
             <i class="el-icon-caret-bottom"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <a href="https://github.com/lin-xin/vue-manage-system"
+            <a href="https://github.com/whoopsHzh/by_manege"
                target="_blank">
               <el-dropdown-item>项目仓库</el-dropdown-item>
             </a>
@@ -60,26 +60,31 @@
 </template>
 <script>
 import bus from '../common/bus';
+import { mapMutations, mapGetters } from 'vuex'
+
 export default {
+  
   data () {
     return {
       collapse: false,
       fullscreen: false,
-      name: 'linxin',
+      name: 'hh',
       message: 2
     };
   },
   computed: {
+    ...mapGetters({ _adminName: 'adminName' }),
     username () {
-      let username = localStorage.getItem('userId');
+      let username = this._adminName;
       return username ? username : this.name;
     }
   },
   methods: {
+    ...mapMutations({ _loginSuccess: 'LOGIN_SUCCESS' }),
     // 用户名下拉菜单选择事件
     handleCommand (command) {
       if (command == 'loginout') {
-        localStorage.removeItem('ms_username');
+        this._loginSuccess(null)
         this.$router.push('/login');
       }
     },

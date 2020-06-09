@@ -20,7 +20,9 @@ module.exports = {
                 'components': '@/components',
                 'views': '@/views',
                 'api': '@/request',
-                'router': '@/router'
+                'router': '@/router',
+                'common': '@/components/common',
+                'store': '@/store',
             }
         }
     }

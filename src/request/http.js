@@ -1,12 +1,9 @@
 import axios from 'axios'; // 引入axios
 import QS from 'qs'; // 引入qs模块，用来序列化post类型的数据，后面会提到
 import router from 'router'; //引入router
-import { Loading } from 'element-ui';
+import { Loading, Message } from 'element-ui';
 
-// import store from 'store';
-// import {
-//   toast
-// } from 'common/js/totas.js'
+import store from 'store';
 
 // vant的toast提示框组件，大家可根据自己的ui组件更改。
 // import {
@@ -29,12 +26,12 @@ import { Loading } from 'element-ui';
  * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
  */
 const toLogin = () => {
-  //   router.replace({
-  //     path: '/login',
-  //     query: {
-  //       redirect: router.currentRoute.fullPath
-  //     }
-  //   });
+  router.replace({
+    path: '/login',
+    query: {
+      redirect: router.currentRoute.fullPath
+    }
+  });
 
   //假装你在跳转主页 
   console.log("你到主页了");
@@ -61,28 +58,26 @@ const errorHandle = (status, other) => {
       // toast('登录过期，请重新登录');
       // toast('登录过期，请重新登录');
       //    localStorage存储操作
-      //   localStorage.removeItem('token');
-      // store.commit('loginSuccess', null);
+      // localStorage.removeItem('token');//在vuex完成
+      store.commit('loginSuccess', null);
       setTimeout(() => {
         toLogin();
       }, 1000);
       break;
     // 404请求不存在
     case 404:
-      // alter('请求的资源不存在');
-      toast('请求的资源不存在');
+      Message({ message: '请求的资源不存在', type: 'error' });
       break;
     case 500:
-      // alter('请求的资源不存在');
-      toast('Internal Server Error');
+      Message({ message: '请求的资源不存在', type: 'error' });
       break;
     default:
-      // if (other.includes('timeout')) {
-      //   toast('timeout',2000)
-      //   return
-      // }
-      console.log(other)
-      toast(other);
+      if (other.includes('timeout')) {
+        Message({ message: '链接超时', type: 'error' });
+        return
+      }
+      // console.log(other)
+      Message({ message: other, type: 'error' });
   }
 }
 
@@ -105,24 +100,19 @@ instance.defaults.transformRequest = [function (data) {
  * 请求拦截器 
  * 每次请求前，如果存在token则在请求头中携带token 
  */
-let loadingInstance
 instance.interceptors.request.use(
   config => {
     // 登录流程控制中，根据本地是否存在token判断用户的登录情况        
     // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token        
     // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码        
     // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。        
-    // const token = store.state.token;
-    // token && (config.headers.Authorization = token);
-    console.log(config.data);
-    console.log(Loading);
-    loadingInstance = config.data.Loading ? Loading.service({ fullscreen: true }) : ''
+    const token = store.state.token;
+    token && (config.headers.Authorization = token);
+
     return config;
   },
   error => {
-    if (loadingInstance) {
-      loadingInstance.close()
-    }
+
     Promise.error(error)
   }
 
@@ -133,9 +123,6 @@ instance.interceptors.response.use(
   // 请求成功
   res => {
     if (res.status === 200) {
-      if (loadingInstance) {
-        loadingInstance.close()
-      }
       return Promise.resolve(res.data)
     } else Promise.reject(res.data)
   }
@@ -143,9 +130,7 @@ instance.interceptors.response.use(
   ,
   // 请求失败
   error => {
-    if (loadingInstance) {
-      loadingInstance.close()
-    }
+
     const {
       response
     } = error;
