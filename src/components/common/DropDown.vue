@@ -1,18 +1,23 @@
 <template>
   <el-dropdown @command="handleCommand">
     <el-button type="primary">
-      {{tit}}<i class="el-icon-arrow-down el-icon--right"></i>
+      {{comTit}}<i class="el-icon-arrow-down el-icon--right"></i>
     </el-button>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item v-for="(item, index) in data"
                         :key="item.id"
-                        :command="item.id">{{item.userName}}</el-dropdown-item>
+                        :command="item.userName">{{item.userName}}</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      selcedVualue: ''
+    }
+  },
   props: {
     data: {
       type: Array,
@@ -25,9 +30,15 @@ export default {
       default: '下拉菜单'
     }
   },
+  computed: {
+    comTit () {
+      return this.selcedVualue ? this.selcedVualue : this.tit
+    }
+  },
   methods: {
     // 下拉菜单
     handleCommand (command) {
+      this.selcedVualue = command
       this.$emit('select', command);
     },
   },

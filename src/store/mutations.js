@@ -24,6 +24,9 @@ const matutions = {
       localStorage.removeItem('token');
     }
   },
+  [types.SET_UPLOADDATA] (state, data) {
+    state.upLoadData = data
+  }
 }
 
 export default matutions

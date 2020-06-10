@@ -1,23 +1,33 @@
 <template>
-  <div>
+  <div :class="key">
     <a href="#"
        class="file">上传资料<input type="file"
              @change="change">
     </a>
     {{key}}
+    <!-- <div v-for="(item, index) in fileArr"
+         :key="index">
+      {{item.id}}-{{item.key}}
+    </div> -->
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   data () {
     return {
       fileName: '',
       fileId: '',
+      fileArr: [],
       key: ''
     }
   },
+  computed: {
+    ...mapGetters({ _upLoadData: 'upLoadData' })
+  },
   methods: {
+    ...mapMutations({ _setUpLoadData: 'SET_UPLOADDATA' }),
     change (e) {
       let that = this
       let oFile = e.target.files[0];
@@ -39,6 +49,13 @@ export default {
           console.log(response);
           that.fileId = response.data.id
           that.fileName = oFile.name
+          //   let key = that.key
+          console.log('key', this.key);
+          let fileObj = {
+            key,
+            id: response.data.id
+          }
+          that._setUpLoadData(...that._upLoadData, fileObj)
         })
         .catch(function (error) {
           console.log(error);

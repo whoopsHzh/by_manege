@@ -6,6 +6,8 @@ export const adminName = state => state.adminName
 
 export const deptCode = state => state.deptCode
 
+export const upLoadData = state => state.upLoadData
+
 
 
 

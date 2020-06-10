@@ -2,7 +2,7 @@
   <div class="performance-page">
     <DropDown @select='select'
               tit="选择员工"
-              :data="dataArr"></DropDown>
+              :data="userDataArr"></DropDown>
     <div class="warp"
          v-show="formData"
          v-html="formData"
@@ -30,7 +30,8 @@ export default {
       loading: true,
       something: '',
       updata: {},
-      dataArr: []
+      userDataArr: [],
+      VueHandleMount: false,//是否挂载了vue dom
     }
   },
   components: {
@@ -47,7 +48,7 @@ export default {
     // 部门编号查询员工账号
     queryAdminByDept (partNum) {
       this.$api.queryAdminByDept(partNum).then(res => {
-        this.dataArr = res.data
+        this.userDataArr = res.data
       })
     },
     // 获取当前部门计算模板接口
@@ -61,35 +62,47 @@ export default {
       })
     },
     // 选择人员
-    select (staffId) {
+    select (name) {
       // reset updata
       this.updata = {}
-      this.getKpiTemplateHtml(this._adminId, staffId)
+      let selectUser = this.userDataArr.filter(item => {
+        return item.userName == name
+      })
+      let { id } = selectUser[0]
+      this.getKpiTemplateHtml(this._adminId, id)
     },
     uploadDateFile (fileDate) {
       this.$api.uploadDateFile(fileDate).then(res => {
         console.log(res);
       })
     },
+    // upload mount dom
     pushInputdomChange () {
+      // if (this.VueHandleMount) {
+      //   return
+      // }
+      // else {
+      let that = this
       // upload btn event mount
       let upLoadFather = document.querySelectorAll('.btn-upload')
       upLoadFather.forEach((Element, index) => {
-
+        // to mount Vue Compoments
         // change cls
         let upInput = Element.children[0]
+
         let key = upInput.getAttribute('data-type-btnevent')
-        //  to mount Vue Compoments
+        console.log('upInputkey', key);
+
         let myShowBox = Vue.extend(Upload)
         let showBoxInstance = new myShowBox({
           data () {
             return {
-              key
+              key: key
             }
           },
         }).$mount(upInput);
-
       })
+      // }
 
       // input onchange event mount
       let inputFather = document.querySelectorAll('.input-onchange')
