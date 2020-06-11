@@ -13,9 +13,9 @@ const performance = {
     })
   },
   // 获取当前部门计算模板接口
-  getKpiTemplateHtml (adminId, staffId) {
+  getKpiTemplateHtml (adminId, staffId, time) {
     return api.post(`${base.src}/weichatApi/kpi/getKpiTemplateHtml`, {
-      adminId, staffId, Loading: 'true'
+      adminId, staffId, time, Loading: 'true'
     })
   },
   // 部门编号查询员工账号
@@ -28,6 +28,32 @@ const performance = {
   uploadDateFile (file) {
     return api.post(`${base.src}/file/uploadDateFile`, {
       file
+    })
+  },
+  // 保存表格
+  saveKpiTemplateItem (params) {
+    const { kpiTemplateItemDtos, time, staffAccountId, titleMap, fileDtoList } = params
+    return api.post(`${base.src}/weichatApi/kpi/saveKpiTemplateItem`, {
+      staffAccountId,
+      time,
+      kpiTemplateItemDtos: JSON.stringify(kpiTemplateItemDtos),
+
+      staffAccountId,
+      titleMap: JSON.stringify(titleMap),
+      fileDtoList: JSON.stringify(fileDtoList)
+    }
+    )
+  },
+  // 绩效列表
+  uploadDateFile (page) {
+    return api.post(`${base.src}/web/kpi/queryForList`, {
+      page
+    })
+  },
+  // 绩效详情
+  getKpiTemplatePage (serialNumber) {
+    return api.post(`${base.src}/weichatApi/kpi/getKpiTemplatePage`, {
+      serialNumber
     })
   },
 }

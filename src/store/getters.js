@@ -8,6 +8,13 @@ export const deptCode = state => state.deptCode
 
 export const upLoadData = state => state.upLoadData
 
+export const userId = state => state.userId
+
+export const serialNumber = state => state.serialNumber
+
+export const part = state => state.part
+
+
 
 
 

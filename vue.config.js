@@ -1,5 +1,5 @@
 module.exports = {
-    baseUrl: './',
+    publicPath: '/h5/manage/',
     assetsDir: 'static',
     productionSourceMap: false,
     // devServer: {

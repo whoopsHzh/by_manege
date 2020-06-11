@@ -4,16 +4,18 @@
        class="file">上传资料<input type="file"
              @change="change">
     </a>
-    {{key}}
-    <!-- <div v-for="(item, index) in fileArr"
-         :key="index">
-      {{item.id}}-{{item.key}}
-    </div> -->
+    <div class="showUploadFileWarp">
+      <div v-for="(item, index) in fileArr"
+           :key="index">{{item.fileName}}&nbsp;&nbsp;<i @click="deleteFile(index)"
+           class="el-icon-lx-roundclose"></i>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import { Loading } from 'element-ui';
 export default {
   data () {
     return {
@@ -23,18 +25,35 @@ export default {
       key: ''
     }
   },
+  mounted () {
+
+
+  },
   computed: {
     ...mapGetters({ _upLoadData: 'upLoadData' })
   },
   methods: {
+    deleteFile (index) {
+      let deleteFile = this.fileArr[index]
+      this.fileArr.splice(index, 1)
+
+      //   vuex中去删除
+      let temp_upLoadData = this._upLoadData.slice()
+      console.log('temp_upLoadData', temp_upLoadData);
+
+      let newtemp_upLoadData = temp_upLoadData.filter(item => {
+        return item != deleteFile
+      })
+      this._setUpLoadData(newtemp_upLoadData);
+    },
     ...mapMutations({ _setUpLoadData: 'SET_UPLOADDATA' }),
     change (e) {
       let that = this
-      let oFile = e.target.files[0];
-      console.log('oFile', oFile.name);
 
+      let oFile = e.target.files[0];
       let formData = new FormData();
       formData.append('file', oFile);
+      let loadingInstance1 = Loading.service({ fullscreen: true });
       let config = {
         //添加请求头
         headers: { "Content-Type": "multipart/form-data" },
@@ -44,21 +63,32 @@ export default {
           this.progress = completeProgress;
         }
       };
-      this.$axios.post('http://192.168.1.166:9099/performance/file/uploadDateFile', formData, config).then(
+
+      this.$axios.post(`${this.$api.base.src}/file/uploadDateFile`, formData, config).then(
         function (response) {
-          console.log(response);
-          that.fileId = response.data.id
-          that.fileName = oFile.name
-          //   let key = that.key
-          console.log('key', this.key);
+          let key = that.key
           let fileObj = {
+            itemCode: key,
+            uploadFileId: response.data.data.id,
+            fileUrl: response.data.data.url,
             key,
-            id: response.data.id
+            id: response.data.data.id,
+            fileName: oFile.name
           }
-          that._setUpLoadData(...that._upLoadData, fileObj)
+          let setData = that._upLoadData.concat(fileObj)
+          //   save the comData
+          that.fileArr.push(fileObj)
+          //   save the vue
+          that._setUpLoadData(setData)
+          // loding
+          that.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+            loadingInstance1.close();
+          });
         })
         .catch(function (error) {
-          console.log(error);
+          that.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+            loadingInstance1.close();
+          });
         });
 
     }

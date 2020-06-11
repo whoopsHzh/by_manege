@@ -13,8 +13,10 @@ import axios from 'axios'
 
 // axios
 Vue.prototype.$axios = axios
+
 // vuex
 import store from 'store'
+Vue.prototype.$store = store
 
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
@@ -34,6 +36,7 @@ Vue.prototype.$api = api
 
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
+
     // document.title = `${to.meta.title} | vue-manage-system`;
     // const role = localStorage.getItem('ms_username');
     // if (!role && to.path !== '/login') {

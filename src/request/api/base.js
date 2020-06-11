@@ -3,12 +3,13 @@
  */
 var src;
 if (document.domain == 'ts.baoyitech.com.cn') { //阿里云测试服务器
-  src = 'https://ts.baoyitech.com.cn/car_server/';
+  src = 'https://ts.baoyitech.com.cn/performance/';
+  // src = 'http://192.168.1.166:9099/performance';
 } else if (document.domain == 'mp.baoyitech.com.cn') { //正式服
-  src = 'https://app.baoyitech.com.cn/car_server/';
+  src = 'https://app.baoyitech.com.cn/performance/';
 } else {
   src = 'http://192.168.1.166:9099/performance'; //杨衡 
-  // src = 'https://app.baoyitech.com.cn/car_server/';//正式
+  src = 'https://app.baoyitech.com.cn/performance/';//正式
   // src = 'http://192.168.1.35:9090/car_server/'; ///杨衡 
   // src = 'http://192.168.2.101:9090/car_server/'; ///杨衡 
   // src = 'http://192.168.1.110:9090'; //庄鹏腾
@@ -22,6 +23,6 @@ if (document.domain == 'ts.baoyitech.com.cn') { //阿里云测试服务器
 
 
 const base = {
-  src //接口地址
+  src, //接口地址,
 }
 export default base;

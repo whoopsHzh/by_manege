@@ -53,7 +53,7 @@ export default {
         {
           icon: 'el-icon-lx-home',
           index: 'dashboard',
-          title: '系统首页'
+          title: '用户信息'
         },
         {
           icon: 'el-icon-lx-rankfill',
@@ -61,8 +61,12 @@ export default {
           title: '绩效管理',
           subs: [
             {
+              index: 'MeritsList',
+              title: '绩效列表'
+            },
+            {
               index: 'Performance',
-              title: '查看绩效'
+              title: '添加绩效'
             }
           ]
         },
@@ -137,28 +141,32 @@ export default {
         //   index: 'i18n',
         //   title: '国际化功能'
         // },
-        {
-          icon: 'el-icon-lx-warn',
-          index: '7',
-          title: '错误处理',
-          subs: [
-            // {
-            //   index: 'permission',
-            //   title: '权限测试'
-            // },
-            {
-              index: '404',
-              title: '404页面'
-            }
-          ]
-        }
+        // {
+        //   icon: 'el-icon-lx-warn',
+        //   index: '7',
+        //   title: '错误处理',
+        //   subs: [
+        //     // {
+        //     //   index: 'permission',
+        //     //   title: '权限测试'
+        //     // },
+        //     {
+        //       index: '404',
+        //       title: '404页面'
+        //     }
+        //   ]
+        // }
       ]
     };
   },
   computed: {
     onRoutes () {
-      console.log('this.$route.path.replace', this.$route.path.replace('/', ''));
+      console.log(this.$route.path);
+      console.log(this.$route.path.replace('/', ''));
 
+      // if (this.$route.path.indexOf('meritDetail/') > -1) {
+      //   // return this.$route.path.replace(`/${this.$route.path}`, '');
+      // }
       return this.$route.path.replace('/', '');
     }
   },

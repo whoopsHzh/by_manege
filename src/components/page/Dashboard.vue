@@ -11,12 +11,12 @@
                  alt />
             <div class="user-info-cont">
               <div class="user-info-name">{{_adminName}}</div>
-              <div>{{role}}</div>
+              <div class="part">部门:{{_part}}</div>
             </div>
           </div>
           <div class="user-info-list">
-            上次登录时间：
-            <span>2019-11-01</span>
+            <!-- 上次登录时间： -->
+            <!-- <span>2019-11-01</span> -->
           </div>
           <!-- <div class="user-info-list">
             上次登录地点：
@@ -63,7 +63,7 @@ export default {
     Schart
   },
   computed: {
-    ...mapGetters({ _adminName: 'adminName' }),
+    ...mapGetters({ _adminName: 'adminName', _part: 'part' }),
     role () {
       return this.name === 'admin' ? '超级管理员' : '普通用户';
     }
@@ -147,7 +147,7 @@ export default {
 }
 
 .user-info-cont {
-    padding-left: 50px;
+    padding-left: 30px;
     flex: 1;
     font-size: 14px;
     color: #999;
@@ -180,7 +180,12 @@ export default {
     text-decoration: line-through;
     color: #999;
 }
-
+.user-info-name {
+    /* font-size: 3rem; */
+}
+.part {
+    margin-top: 15px;
+}
 .schart {
     width: 100%;
     height: 300px;

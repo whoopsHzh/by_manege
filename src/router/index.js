@@ -5,6 +5,7 @@ Vue.use(Router);
 
 export default new Router({
     mode: 'history',
+    base: '/h5/manage/',
     routes: [
         {
             path: '/',
@@ -18,7 +19,7 @@ export default new Router({
                 {
                     path: '/dashboard',
                     component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
-                    meta: { title: '系统首页' }
+                    meta: { title: '用户信息' }
                 },
                 {
                     path: '/icon',
@@ -101,8 +102,18 @@ export default new Router({
                 {
                     path: '/performance',
                     component: () => import(/* webpackChunkName: "403" */ '../components/page/Performance.vue'),
-                    meta: { title: '绩效查看' }
+                    meta: { title: '添加绩效' }
                 },
+                {
+                    path: '/MeritsList',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/MeritsList.vue'),
+                    meta: { title: '绩效列表' }
+                },
+                {
+                    path: '/meritDetail',
+                    component: () => import(/* webpackChunkName: "403" */ '../components/page/MeritDetail.vue'),
+                    meta: { title: '绩效详情' }
+                }
             ]
         },
         {

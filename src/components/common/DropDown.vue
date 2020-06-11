@@ -1,21 +1,35 @@
 <template>
-  <el-dropdown @command="handleCommand">
-    <el-button type="primary">
-      {{comTit}}<i class="el-icon-arrow-down el-icon--right"></i>
-    </el-button>
-    <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item v-for="(item, index) in data"
-                        :key="item.id"
-                        :command="item.userName">{{item.userName}}</el-dropdown-item>
-    </el-dropdown-menu>
-  </el-dropdown>
+  <div>
+    <!-- <el-dropdown @command="handleCommand">
+      <el-button type="primary">
+        {{comTit}}<i class="el-icon-arrow-down el-icon--right"></i>
+      </el-button>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item v-for="(item, index) in data"
+                          :key="item.id"
+                          :command="item.userName">{{item.userName}}</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown> -->
+    <el-select v-model="value"
+               @change="handleCommand"
+               filterable
+               placeholder="请选择">
+      <el-option v-for="item in data"
+                 :key="item.id"
+                 :label="item.userName"
+                 :value="item.userName">
+      </el-option>
+    </el-select>
+  </div>
+
 </template>
 
 <script>
 export default {
   data () {
     return {
-      selcedVualue: ''
+      selcedVualue: '',
+      value: ''
     }
   },
   props: {
@@ -30,11 +44,7 @@ export default {
       default: '下拉菜单'
     }
   },
-  computed: {
-    comTit () {
-      return this.selcedVualue ? this.selcedVualue : this.tit
-    }
-  },
+
   methods: {
     // 下拉菜单
     handleCommand (command) {
