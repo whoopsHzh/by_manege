@@ -42,6 +42,7 @@ const toLogin = () => {
  * @param {Number} status 请求失败的状态码
  */
 const errorHandle = (status, other) => {
+
   // 状态码判断
   switch (status) {
     // error: "Bad Request"
@@ -73,6 +74,7 @@ const errorHandle = (status, other) => {
       break;
     default:
       if (other.includes('timeout')) {
+
         Message({ message: '链接超时', type: 'error' });
         return
       }
@@ -134,7 +136,7 @@ instance.interceptors.response.use(
   ,
   // 请求失败
   error => {
-
+    Message({ message: '服务器错误,请稍后再试！', type: 'error' });
     const {
       response
     } = error;
@@ -143,6 +145,8 @@ instance.interceptors.response.use(
       errorHandle(response.status, response.data.message || response.message);
       return Promise.reject(response);
     } else {
+
+
       // 处理断网的情况
       // eg:请求超时或断网时，更新state的network状态
       // network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏

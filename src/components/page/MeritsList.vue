@@ -18,15 +18,18 @@
                          label="部门名称"
                          width="120">
         </el-table-column>
-        <el-table-column prop="createTime"
+        <!-- <el-table-column prop="createTime"
                          label="创建时间"
                          width="120">
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="kpiTime"
                          label="绩效月份"
                          width="120">
         </el-table-column>
-
+        <el-table-column prop="totolKpiScore"
+                         label="绩效分数"
+                         width="300">
+        </el-table-column>
         <el-table-column prop="totalKpiMoney"
                          label="绩效金额"
                          width="">
@@ -36,13 +39,10 @@
                          width="">
         </el-table-column> -->
         <el-table-column prop="totalBonusMoney"
-                         label="提奖总金额"
+                         label="提奖金额"
                          width="">
         </el-table-column>
-        <el-table-column prop="totolKpiScore"
-                         label="绩效总分数"
-                         width="300">
-        </el-table-column>
+
         <el-table-column fixed="right"
                          label="操作"
                          width="120">

@@ -25,10 +25,10 @@
     </div>
     <el-button type="primary"
                size="medium"
-               style="width: 100%;font-size: 1.5em;
+               style="font-size: 1em;
     font-weight: 900;"
                round
-               @click="saveFrom">保存</el-button>
+               @click="saveFrom">保&nbsp;&nbsp;存</el-button>
   </div>
   </div>
 
