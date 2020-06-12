@@ -66,24 +66,27 @@ export default {
 
       this.$axios.post(`${this.$api.base.src}/file/uploadDateFile`, formData, config).then(
         function (response) {
-          let key = that.key
-          let fileObj = {
-            itemCode: key,
-            uploadFileId: response.data.data.id,
-            fileUrl: response.data.data.url,
-            key,
-            id: response.data.data.id,
-            fileName: oFile.name
+          console.log('response', response);
+          if (response.status == 200 && response.data.status == 10000) {
+            let key = that.key
+            let fileObj = {
+              itemCode: key,
+              uploadFileId: response.data.data.id,
+              fileUrl: response.data.data.url,
+              key,
+              id: response.data.data.id,
+              fileName: oFile.name
+            }
+            let setData = that._upLoadData.concat(fileObj)
+            //   save the comData
+            that.fileArr.push(fileObj)
+            //   save the vue
+            that._setUpLoadData(setData)
+            // loding
+            that.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+              loadingInstance1.close();
+            });
           }
-          let setData = that._upLoadData.concat(fileObj)
-          //   save the comData
-          that.fileArr.push(fileObj)
-          //   save the vue
-          that._setUpLoadData(setData)
-          // loding
-          that.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
-            loadingInstance1.close();
-          });
         })
         .catch(function (error) {
           that.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭

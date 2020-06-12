@@ -9,7 +9,7 @@ if (document.domain == 'ts.baoyitech.com.cn') { //阿里云测试服务器
   src = 'https://app.baoyitech.com.cn/performance/';
 } else {
   src = 'http://192.168.1.166:8620/performance'; //杨衡 
-  // src = 'https://app.baoyitech.com.cn/performance/';//正式
+  src = 'https://app.baoyitech.com.cn/performance/';//正式
   // src = 'http://192.168.1.35:9090/car_server/'; ///杨衡 
   // src = 'http://192.168.2.101:9090/car_server/'; ///杨衡 
   // src = 'http://192.168.1.110:9090'; //庄鹏腾
